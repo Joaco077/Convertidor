@@ -3,7 +3,8 @@ import zipfile
 import pandas as pd
 from flask import Flask, request, render_template, send_file
 
-app = Flask(__name__)
+# Crear la aplicación Flask
+app = Flask(__name__, template_folder=".")
 
 # Carpetas de trabajo
 UPLOAD_FOLDER = "uploads"
@@ -13,10 +14,12 @@ OUTPUT_FOLDER = "outputs"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
+# Ruta principal que carga la plantilla index.html
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')  # Buscará 'index.html' en el directorio actual
 
+# Ruta para subir y procesar el archivo Excel
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
